@@ -39,7 +39,7 @@ int main()
 	// Animation Frame Switching (this was from a Rachel Singh tutorial back in '09)
 	sf::Clock Clock;
 	// I quite frankly have no idea where I yanked these numbers from, but these are the ones that felt right apparently
-	float frameCounter = 0, switchCounter = 75, frameSpeed = 416;
+	float CurrentFrameCount = 0, FrameIncrement = 75, FramesPerSecond = 416;
 
 	// Music
 	sf::Music BackgroundMusic;
@@ -65,7 +65,7 @@ int main()
 		return EXIT_FAILURE;
 	sf::Sprite PlayerSprite;
 	PlayerSprite.setTexture(PlayerTexture);
-	PlayerSprite.setPosition(640 - 32, 360 - 16);
+	PlayerSprite.setPosition(640 - 32, 360 - 16); 
 	
 	// Player Movement
 	float CurSpeed = 0;
@@ -186,6 +186,7 @@ int main()
 			curRankString = "TROLOLOL!!!!";
 			CurSpeed = MaxSpeed * 2.5f;
 		}
+
 		/*
 			// This was here to test if the stick collection actually worked
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
@@ -251,7 +252,7 @@ int main()
 				else
 				{
 					// Otherwise, stop the animation
-					frameCounter = 0;
+					CurrentFrameCount = 0;
 					CurrentAnimation.x = 0;
 				}
 				break;
@@ -263,7 +264,7 @@ int main()
 				}
 				else
 				{
-					frameCounter = 0;
+					CurrentFrameCount = 0;
 					CurrentAnimation.x = 0;
 				}
 				break;
@@ -275,7 +276,7 @@ int main()
 				}
 				else
 				{
-					frameCounter = 0;
+					CurrentFrameCount = 0;
 					CurrentAnimation.x = 0;
 				}
 				break;
@@ -287,7 +288,7 @@ int main()
 				}
 				else
 				{
-					frameCounter = 0;
+					CurrentFrameCount = 0;
 					CurrentAnimation.x = 0;
 				}
 				break;
@@ -302,10 +303,10 @@ int main()
 		// This adds a delta time (frameSpeed * Clock.restart().asSeconds()) to the current frame
 		// and if it exceeds the switch counter, then the animation increases by one.
 		// However, if the current frame exceeds the length of the texture width, then reset it
-		frameCounter += frameSpeed * Clock.restart().asSeconds();
-		if (frameCounter >= switchCounter)
+		CurrentFrameCount += FramesPerSecond * Clock.restart().asSeconds();
+		if (CurrentFrameCount >= FrameIncrement)
 		{
-			frameCounter = 0;
+			CurrentFrameCount = 0;
 			CurrentAnimation.x++;
 			if (CurrentAnimation.x * 32 >= PlayerTexture.getSize().x)
 				CurrentAnimation.x = 0;
